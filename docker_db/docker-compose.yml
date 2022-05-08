@@ -1,0 +1,45 @@
+version: "3.9"
+
+volumes:
+    bancoDados:
+   
+
+services:
+    #Banco de Dados
+    db:
+        image: postgres:9.6.24
+        container_name: postgres
+        restart: always
+        environment:
+            TZ: America/Sao_Paulo
+            POSTGRES_USER: santander
+            POSTGRES_PASSWORD: santander
+            POSTGRES_DB: banklineapi_db
+        volumes:
+            - ./bancoDados:/var/lib/postgresql/data
+        ports:
+            - 5432:5432
+        networks:
+            - banco
+            
+    
+    #INTERFACE PARA ACESSO AO POSTGRESQLclear
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: pgadmin
+        environment:
+            PGADMIN_DEFAULT_EMAIL: hugo.undb@gmail.com
+            PGADMIN_DEFAULT_PASSWORD: hugo2010
+        ports:
+            - 8889:80
+        networks:
+            - banco
+        depends_on:
+            - db
+
+   
+
+networks:
+    banco:
+  
+

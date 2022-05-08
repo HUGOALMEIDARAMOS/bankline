@@ -7,6 +7,7 @@ import com.santandedr.bankline.api.repository.CorrentistaRepository;
 import com.santandedr.bankline.api.repository.MovimentacaoRepository;
 import com.santandedr.bankline.api.service.CorrentistaService;
 import com.santandedr.bankline.api.service.MovimentacaoService;
+import io.swagger.v3.core.util.Json;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +31,13 @@ public class movimentacaoController {
 
     @PostMapping
     public void save(@RequestBody NovaMovimentacao novaMovimentacao){
+        System.out.printf(String.valueOf(novaMovimentacao));
         service.save(novaMovimentacao);
+    }
+
+    @GetMapping("/{idConta}")
+    public List<Movimentacao> findAll(@PathVariable("idConta") Integer idConta){
+        return repository.findByIdConta(idConta);
     }
 
 }
